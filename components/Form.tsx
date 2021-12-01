@@ -2,7 +2,11 @@ import { Flex, Spacer, FormControl, Input, Button } from "@chakra-ui/react";
 
 import { ChangeEvent, useState, MouseEvent } from "react";
 
-const Form = () => {
+interface IProps {
+  getWeather(newCity: string): void;
+}
+
+const Form = ({ getWeather }: IProps) => {
   const [value, setValue] = useState<string>("");
 
   const search = (e: MouseEvent<HTMLButtonElement>): void => {
@@ -10,8 +14,7 @@ const Form = () => {
 
     if (!value) return;
 
-    // ...some function
-    console.log(value);
+    getWeather(value);
 
     setValue("");
 

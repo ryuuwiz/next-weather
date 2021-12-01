@@ -1,6 +1,6 @@
-import type { InferGetServerSidePropsType, NextPage } from "next";
+import type { InferGetStaticPropsType, NextPage } from "next";
 import Head from "next/head";
-import { GetServerSideProps } from "next";
+import { GetStaticProps } from "next";
 
 import { Flex, Container } from "@chakra-ui/react";
 
@@ -10,16 +10,38 @@ import Footer from "../components/Footer";
 
 import axios from "axios";
 import useSWR from "swr";
+import { useState } from "react";
 
 const fetcher = (url: any) => axios.get(url).then((res) => res.data);
 
-const Home: NextPage = ({
-  API_KEY,
-}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
+const useWeather = (city: string, api_key: string) => {
   const { data, error } = useSWR(
-    `https://api.openweathermap.org/data/2.5/weather?q=depok&appid=${API_KEY}&units=metric`,
+    city
+      ? `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${api_key}&units=metric`
+      : null,
     fetcher
   );
+
+  return {
+    weather: data,
+    isLoading: !error && !data,
+    isError: error,
+  };
+};
+
+const Home: NextPage = ({
+  API_KEY,
+}: InferGetStaticPropsType<typeof getStaticProps>) => {
+  const [city, setCity] = useState<string>("");
+
+  const { weather, isLoading, isError } = useWeather(city, API_KEY);
+
+  const getWeather = (newCity: string): void => {
+    if (!newCity) return;
+    setCity(newCity);
+  };
+
+  console.log(weather);
 
   return (
     <Flex
@@ -37,7 +59,7 @@ const Home: NextPage = ({
 
       <Container>
         <Flex direction="column" background="gray.100" p={10} rounded={10}>
-          <Form />
+          <Form getWeather={getWeather} />
           <Content />
         </Flex>
         <Footer />
@@ -48,7 +70,7 @@ const Home: NextPage = ({
 
 export default Home;
 
-export const getServerSideProps: GetServerSideProps = async () => {
+export const getStaticProps: GetStaticProps = async () => {
   const API_KEY = process.env.API_KEY;
   return {
     props: {

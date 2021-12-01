@@ -5,7 +5,7 @@ const Content = () => {
     <>
       <Stack spacing={6} py={10} px={2}>
         <Heading size="lg" color="gray.600">
-          Depok
+          Depok, ID
         </Heading>
         <Text
           bgGradient="linear(to-l, #7928CA, #FF0080)"
