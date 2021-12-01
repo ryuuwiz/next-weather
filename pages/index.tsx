@@ -9,7 +9,25 @@ import Content from "../components/Content";
 import Footer from "../components/Footer";
 
 import { useState } from "react";
-import useWeather from "../hooks/useWeather";
+import axios from "axios";
+import useSWR from "swr";
+
+const fetcher = (url: any) => axios.get(url).then((res) => res.data);
+
+const useWeather = (city: string, api_key: string) => {
+  const { data, error } = useSWR(
+    city
+      ? `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${api_key}&units=metric`
+      : null,
+    fetcher
+  );
+
+  return {
+    weather: data,
+    isLoading: !error && !data,
+    isError: error,
+  };
+};
 
 const Home: NextPage = ({
   API_KEY,
