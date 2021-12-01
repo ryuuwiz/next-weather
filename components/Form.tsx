@@ -4,9 +4,9 @@ const Form = () => {
   return (
     <FormControl id="search-city" isRequired>
       <Flex alignItems="center">
-        <Input placeholder="Enter a city name..." />
+        <Input placeholder="Enter a city name..." colorScheme="blue" />
         <Spacer />
-        <Button colorScheme="blue" rounded={6}>
+        <Button colorScheme="blue" rounded={6} ml={3}>
           Search
         </Button>
       </Flex>
