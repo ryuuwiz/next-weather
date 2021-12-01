@@ -18,7 +18,7 @@ const Content = () => {
       </Stack>
       <Stack spacing={2} p={2}>
         <Text color="gray.500" fontSize="xl" fontWeight="medium">
-          Few clouds
+          Feels like 29 °C
         </Text>
         <Text color="gray.500" fontSize="md" fontWeight="medium">
           Humidity: 42%
