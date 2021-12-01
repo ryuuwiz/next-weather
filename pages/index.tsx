@@ -74,5 +74,6 @@ export const getStaticProps: GetStaticProps = async () => {
     props: {
       API_KEY,
     },
+    revalidate: 10,
   };
 };
