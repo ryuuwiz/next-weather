@@ -1,30 +1,50 @@
-import { Stack, Heading, Text } from "@chakra-ui/react";
+import { Stack, Heading, Text, Img, Flex, Box } from "@chakra-ui/react";
 
-const Content = () => {
+interface IProps {
+  weatherData: any;
+}
+
+const Content = ({ weatherData }: IProps) => {
+  const iconTime = weatherData.weather[0].icon.replace(/[0-9\n]/g, "");
+
   return (
     <>
-      <Stack spacing={6} py={10} px={2}>
-        <Heading size="lg" color="gray.600">
-          Depok, ID
-        </Heading>
+      <Stack spacing={6} p={5}>
+        <Flex direction="row" alignItems="center">
+          <Box
+            backgroundColor={iconTime === "n" ? "gray.400" : "yellow.400"}
+            borderRadius="full"
+            mr={2}
+          >
+            <Img
+              src={`http://openweathermap.org/img/wn/${weatherData.weather[0].icon}@2x.png`}
+              alt={`${weatherData.weather[0].icon}`}
+              boxSize="60px"
+              loading="lazy"
+            />
+          </Box>
+          <Heading size="lg" color="gray.600">
+            {weatherData.name}, {weatherData.sys.country}
+          </Heading>
+        </Flex>
         <Text
           bgGradient="linear(to-l, #7928CA, #FF0080)"
           bgClip="text"
-          fontSize="4xl"
+          fontSize="6xl"
           fontWeight="extrabold"
         >
-          29 °C
+          {Math.floor(weatherData.main.temp)} °C
         </Text>
       </Stack>
-      <Stack spacing={2} p={2}>
-        <Text color="gray.500" fontSize="xl" fontWeight="medium">
-          Feels like 29 °C
+      <Stack spacing={2} p={5} backgroundColor="gray.200" rounded={10}>
+        <Text color="gray.600" fontSize="xl" fontWeight="medium">
+          Feels like {Math.floor(weatherData.main.feels_like)} °C
         </Text>
-        <Text color="gray.500" fontSize="md" fontWeight="medium">
-          Humidity: 42%
+        <Text color="gray.600" fontSize="md" fontWeight="medium">
+          Humidity: {weatherData.main.humidity}%
         </Text>
-        <Text color="gray.500" fontSize="md" fontWeight="medium">
-          Wind Speed: 2.57 m/s
+        <Text color="gray.600" fontSize="md" fontWeight="medium">
+          Wind Speed: {weatherData.wind.speed} m/s
         </Text>
       </Stack>
     </>
