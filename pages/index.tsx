@@ -23,9 +23,20 @@ const useWeather = (city: string, api_key: string) => {
   );
 
   return {
-    weather: data,
+    weatherData: data,
     isLoading: !error && !data,
     isError: error,
+  };
+};
+
+const useIcon = (icon: string) => {
+  const { data } = useSWR(
+    icon ? `http://openweathermap.org/img/wn/${icon}@2x.png` : null,
+    fetcher
+  );
+
+  return {
+    weatherIcon: icon,
   };
 };
 
@@ -34,14 +45,16 @@ const Home: NextPage = ({
 }: InferGetStaticPropsType<typeof getStaticProps>) => {
   const [city, setCity] = useState<string>("");
 
-  const { weather, isLoading, isError } = useWeather(city, API_KEY);
+  const { weatherData, isLoading, isError } = useWeather(city, API_KEY);
+
+  const { weatherIcon } = useIcon(
+    weatherData ? weatherData.weather[0].icon : null
+  );
 
   const getWeather = (newCity: string): void => {
     if (!newCity) return;
     setCity(newCity);
   };
-
-  console.log(weather);
 
   return (
     <Flex
