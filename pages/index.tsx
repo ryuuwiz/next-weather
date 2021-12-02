@@ -1,11 +1,12 @@
 import type { NextPage, GetStaticProps, InferGetStaticPropsType } from "next";
 import Head from "next/head";
 
-import { Flex, Container, Alert, AlertIcon } from "@chakra-ui/react";
+import { Flex, Container } from "@chakra-ui/react";
 
 import Form from "../components/Form";
 import Weather from "../components/Weather";
 import SkeletonWeather from "../components/SkeletonWeather";
+import Error from "../components/Error";
 import Footer from "../components/Footer";
 
 import { useState } from "react";
@@ -60,10 +61,7 @@ const Home: NextPage = ({
             {!data && !error ? (
               <SkeletonWeather />
             ) : !data ? (
-              <Alert status="error" my={5} p={5} rounded={10}>
-                <AlertIcon />
-                Not Found !
-              </Alert>
+              <Error />
             ) : (
               <Weather data={data} />
             )}
