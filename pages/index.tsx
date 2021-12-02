@@ -58,11 +58,7 @@ const Home: NextPage = ({
       <Container>
         <Flex direction="column" background="gray.100" p={10} rounded={10}>
           <Form getWeather={getWeather} />
-          {!isLoading ? (
-            <Weather weatherData={weatherData} />
-          ) : (
-            <SkeletonWeather />
-          )}
+          {!isLoading ? <Weather data={weatherData} /> : <SkeletonWeather />}
         </Flex>
         <Footer />
       </Container>

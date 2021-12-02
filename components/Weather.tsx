@@ -1,11 +1,11 @@
 import { Stack, Heading, Text, Img, Flex, Box } from "@chakra-ui/react";
 
 interface IProps {
-  weatherData: any;
+  data: any;
 }
 
-const Weather = ({ weatherData }: IProps) => {
-  const iconTime = weatherData.weather[0].icon.replace(/[0-9\n]/g, "");
+const Weather = ({ data }: IProps) => {
+  const iconTime = data.weather[0].icon.replace(/[0-9\n]/g, "");
 
   return (
     <>
@@ -17,14 +17,14 @@ const Weather = ({ weatherData }: IProps) => {
             mr={2}
           >
             <Img
-              src={`http://openweathermap.org/img/wn/${weatherData.weather[0].icon}@2x.png`}
-              alt={`${weatherData.weather[0].icon}`}
+              src={`http://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`}
+              alt={`${data.weather[0].icon}`}
               boxSize="60px"
               loading="lazy"
             />
           </Box>
           <Heading size="lg" color="gray.600">
-            {weatherData.name}, {weatherData.sys.country}
+            {data.name}, {data.sys.country}
           </Heading>
         </Flex>
         <Text
@@ -33,18 +33,18 @@ const Weather = ({ weatherData }: IProps) => {
           fontSize="6xl"
           fontWeight="extrabold"
         >
-          {Math.floor(weatherData.main.temp)} °C
+          {Math.floor(data.main.temp)} °C
         </Text>
       </Stack>
       <Stack spacing={5} p={5} backgroundColor="gray.200" rounded={10}>
         <Text color="gray.600" fontSize="xl" fontWeight="medium">
-          Feels like {Math.floor(weatherData.main.feels_like)} °C
+          Feels like {Math.floor(data.main.feels_like)} °C
         </Text>
         <Text color="gray.600" fontSize="md" fontWeight="medium">
-          Humidity: {weatherData.main.humidity}%
+          Humidity: {data.main.humidity}%
         </Text>
         <Text color="gray.600" fontSize="md" fontWeight="medium">
-          Wind Speed: {weatherData.wind.speed} m/s
+          Wind Speed: {data.wind.speed} m/s
         </Text>
       </Stack>
     </>
