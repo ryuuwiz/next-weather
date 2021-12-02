@@ -4,7 +4,7 @@ import Head from "next/head";
 import { Flex, Container } from "@chakra-ui/react";
 
 import Form from "../components/Form";
-import Content from "../components/Content";
+import Weather from "../components/Weather";
 import SkeletonWeather from "../components/SkeletonWeather";
 import Footer from "../components/Footer";
 
@@ -59,7 +59,7 @@ const Home: NextPage = ({
         <Flex direction="column" background="gray.100" p={10} rounded={10}>
           <Form getWeather={getWeather} />
           {!isLoading ? (
-            <Content weatherData={weatherData} />
+            <Weather weatherData={weatherData} />
           ) : (
             <SkeletonWeather />
           )}

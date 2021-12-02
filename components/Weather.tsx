@@ -4,7 +4,7 @@ interface IProps {
   weatherData: any;
 }
 
-const Content = ({ weatherData }: IProps) => {
+const Weather = ({ weatherData }: IProps) => {
   const iconTime = weatherData.weather[0].icon.replace(/[0-9\n]/g, "");
 
   return (
@@ -36,7 +36,7 @@ const Content = ({ weatherData }: IProps) => {
           {Math.floor(weatherData.main.temp)} °C
         </Text>
       </Stack>
-      <Stack spacing={2} p={5} backgroundColor="gray.200" rounded={10}>
+      <Stack spacing={5} p={5} backgroundColor="gray.200" rounded={10}>
         <Text color="gray.600" fontSize="xl" fontWeight="medium">
           Feels like {Math.floor(weatherData.main.feels_like)} °C
         </Text>
@@ -51,4 +51,4 @@ const Content = ({ weatherData }: IProps) => {
   );
 };
 
-export default Content;
+export default Weather;
