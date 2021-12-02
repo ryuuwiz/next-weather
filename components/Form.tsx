@@ -1,6 +1,7 @@
 import { Flex, Spacer, FormControl, Input, Button } from "@chakra-ui/react";
 
 import { ChangeEvent, useState, MouseEvent } from "react";
+import { FaSearch } from "react-icons/fa";
 
 interface IProps {
   getWeather(newCity: string): void;
@@ -17,8 +18,6 @@ const Form = ({ getWeather }: IProps) => {
     getWeather(value);
 
     setValue("");
-
-    return;
   };
 
   return (
@@ -30,16 +29,18 @@ const Form = ({ getWeather }: IProps) => {
           onChange={(e: ChangeEvent<HTMLInputElement>) =>
             setValue(e.target.value)
           }
+          p={5}
           value={value}
         />
         <Spacer />
         <Button
           colorScheme="blue"
-          rounded={6}
-          ml={3}
+          rounded="full"
+          ml={2}
+          p={2}
           onClick={(e: MouseEvent<HTMLButtonElement>) => search(e)}
         >
-          Search
+          <FaSearch />
         </Button>
       </Flex>
     </FormControl>
