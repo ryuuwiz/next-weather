@@ -1,11 +1,11 @@
-import type { InferGetStaticPropsType, NextPage } from "next";
+import type { InferGetStaticPropsType, NextPage, GetStaticProps } from "next";
 import Head from "next/head";
-import { GetStaticProps } from "next";
 
 import { Flex, Container } from "@chakra-ui/react";
 
 import Form from "../components/Form";
 import Content from "../components/Content";
+import SkeletonWeather from "../components/SkeletonWeather";
 import Footer from "../components/Footer";
 
 import { useState } from "react";
@@ -32,7 +32,7 @@ const useWeather = (city: string, api_key: string) => {
 const Home: NextPage = ({
   API_KEY,
 }: InferGetStaticPropsType<typeof getStaticProps>) => {
-  const [city, setCity] = useState<string>("");
+  const [city, setCity] = useState<string>("depok");
 
   const { weatherData, isLoading, isError } = useWeather(city, API_KEY);
 
@@ -58,7 +58,11 @@ const Home: NextPage = ({
       <Container>
         <Flex direction="column" background="gray.100" p={10} rounded={10}>
           <Form getWeather={getWeather} />
-          {weatherData ? <Content weatherData={weatherData} /> : ""}
+          {!isLoading ? (
+            <Content weatherData={weatherData} />
+          ) : (
+            <SkeletonWeather />
+          )}
         </Flex>
         <Footer />
       </Container>
@@ -70,6 +74,7 @@ export default Home;
 
 export const getStaticProps: GetStaticProps = async () => {
   const API_KEY = process.env.API_KEY;
+
   return {
     props: {
       API_KEY,
