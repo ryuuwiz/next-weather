@@ -13,28 +13,14 @@ import axios from "axios";
 import useSWR from "swr";
 
 const fetcher = (url: any) => axios.get(url).then((res) => res.data);
+const defaultCity: string = "depok";
 
-const useWeather = (city: string, api_key: string) => {
+const Home: NextPage = () => {
+  const [city, setCity] = useState<string>(defaultCity);
   const { data, error } = useSWR(
-    city
-      ? `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${api_key}&units=metric`
-      : null,
+    () => (city ? `/api/weather/${city}` : null),
     fetcher
   );
-
-  return {
-    weatherData: data,
-    isLoading: !error && !data,
-    isError: error,
-  };
-};
-
-const Home: NextPage = ({
-  API_KEY,
-}: InferGetStaticPropsType<typeof getStaticProps>) => {
-  const [city, setCity] = useState<string>("depok");
-
-  const { weatherData, isLoading, isError } = useWeather(city, API_KEY);
 
   const getWeather = (newCity: string): void => {
     if (!newCity) return;
@@ -58,7 +44,7 @@ const Home: NextPage = ({
       <Container>
         <Flex direction="column" background="gray.100" p={10} rounded={10}>
           <Form getWeather={getWeather} />
-          {!isLoading ? <Weather data={weatherData} /> : <SkeletonWeather />}
+          {!data && !error ? <SkeletonWeather /> : <Weather data={data} />}
         </Flex>
         <Footer />
       </Container>
@@ -67,14 +53,3 @@ const Home: NextPage = ({
 };
 
 export default Home;
-
-export const getStaticProps: GetStaticProps = async () => {
-  const API_KEY = process.env.API_KEY;
-
-  return {
-    props: {
-      API_KEY,
-    },
-    revalidate: 10,
-  };
-};
