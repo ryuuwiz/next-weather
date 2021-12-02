@@ -1,6 +1,6 @@
 # Weather App
 
-> A simple weather app that can search weather by city name.
+> A simple weather app that can search weather by city name and current location.
 
 ## Built with
 
@@ -9,6 +9,8 @@
 - [Chakra UI](https://chakra-ui.com/)
 - [Axios](https://axios-http.com/docs/intro)
 - [SWR](https://swr.vercel.app/)
+- [OpenWeather API](https://openweathermap.org/)
+- [GeoIPLookup.io API](https://geoiplookup.io/)
 
 ## Setup project
 
