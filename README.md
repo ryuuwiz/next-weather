@@ -1,6 +1,6 @@
 # Weather App
 
-> A simple weather app that can search weather by city name and current location.
+> A simple weather app that can search weather by city name
 
 ## Built with
 
