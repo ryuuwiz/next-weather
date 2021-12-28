@@ -10,7 +10,7 @@ const Weather = ({ data }: IProps) => {
 
   return (
     <>
-      <Stack spacing={6} p={5}>
+      <Stack spacing={5} py={6} px={3}>
         <Flex direction="row" alignItems="center">
           <Box
             backgroundColor={iconTime === "n" ? "gray.400" : "yellow.400"}

@@ -3,7 +3,7 @@ import { Stack, Skeleton } from "@chakra-ui/react";
 const SkeletonWeather = () => {
   return (
     <>
-      <Stack spacing={6} p={5}>
+      <Stack spacing={6} py={6} px={3}>
         <Skeleton height="100px" rounded={10} />
         <Skeleton height="50px" rounded={10} />
       </Stack>
