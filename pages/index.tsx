@@ -1,4 +1,4 @@
-import type { NextPage, GetStaticProps, InferGetStaticPropsType } from "next";
+import type { NextPage } from "next";
 import Head from "next/head";
 
 import { Flex, Container } from "@chakra-ui/react";
@@ -15,29 +15,19 @@ import useSWR from "swr";
 
 const fetcher = (url: any) => axios.get(url).then((res) => res.data);
 
-export const getStaticProps: GetStaticProps = async () => {
-  const { region } = await fetcher("https://json.geoiplookup.io/");
+const Home: NextPage = () => {
+  const [city, setCity] = useState<string>("");
 
-  return {
-    props: {
-      region,
-    },
-    revalidate: 5,
-  };
-};
+  const { data: curr } = useSWR("https://json.geoiplookup.io/", fetcher);
 
-const Home: NextPage = ({
-  region,
-}: InferGetStaticPropsType<typeof getStaticProps>) => {
-  const [city, setCity] = useState<string>(() => (region ? region : ""));
-  const { data, error } = useSWR(
-    () => (city ? `/api/weather/${city}` : null),
+  const { data: weather, error } = useSWR(
+    () => (!city ? "/api/weather/" + curr.region : "/api/weather/" + city),
     fetcher
   );
 
-  const getWeather = (newCity: string): void => {
-    if (!newCity) return;
-    setCity(newCity);
+  const getWeather = (city: string): void => {
+    if (!city) return;
+    setCity(city);
   };
 
   return (
@@ -58,12 +48,12 @@ const Home: NextPage = ({
         <Container>
           <Flex direction="column" background="gray.100" p={10} rounded={10}>
             <Form getWeather={getWeather} />
-            {!data && !error ? (
+            {!weather && !error ? (
               <SkeletonWeather />
-            ) : !data ? (
+            ) : !weather ? (
               <Error />
             ) : (
-              <Weather data={data} />
+              <Weather data={weather} />
             )}
           </Flex>
           <Footer />
